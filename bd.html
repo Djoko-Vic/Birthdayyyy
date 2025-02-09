@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;700&display=swap');
+        
+        body {
+            text-align: center;
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+        }
+        h1 {
+            font-size: 60px;
+            font-family: 'Pacifico', cursive;
+            margin-top: 50px;
+            text-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            0% { text-shadow: 4px 4px 15px rgba(255, 255, 255, 0.3); }
+            100% { text-shadow: 4px 4px 25px rgba(255, 255, 255, 0.9); }
+        }
+        .message {
+            font-size: 24px;
+            margin: 20px;
+            font-weight: 400;
+        }
+        .cake {
+            font-size: 120px;
+            animation: bounce 1s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff4b5c, #ff6b81);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        .button:hover {
+            background: linear-gradient(45deg, #ff2e4d, #ff4b5c);
+            transform: scale(1.1);
+        }
+        .decorations {
+            font-size: 50px;
+            margin: 20px 0;
+            animation: float 2s infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="confetti"></canvas>
+    <div class="decorations">🎈🎁🎊</div>
+    <h1>🎉 Happy Birthday, My Dear Friend! 🎂</h1>
+    <p class="message">Wishing you a day filled with love, laughter, and all the happiness in the world!</p>
+    <div class="cake">🎂</div>
+    <button class="button" onclick="playSong()">Play Birthday Song 🎵</button>
+    <div class="decorations">🎊🎁🎈</div>
+    <audio id="birthdaySong" src="https://www.myinstants.com/instant/vine-boom-sound-70972/embed/"></audio>
+    <script>
+        function playSong() {
+            document.getElementById('birthdaySong').play();
+        }
+
+        // Confetti Effect
+        const canvas = document.querySelector('.confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const confetti = [];
+
+        for (let i = 0; i < 150; i++) {
+            confetti.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 6 + 2,
+                d: Math.random() * 2 + 1
+            });
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                ctx.fill();
+                p.y += p.d;
+                if (p.y > canvas.height) p.y = 0;
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+        drawConfetti();
+    </script>
+</body>
+</html>
